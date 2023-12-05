@@ -7,6 +7,7 @@ import com.vti.blogapp.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,5 +33,10 @@ public class PostController {
     @PutMapping("/api/v1/posts/{id}")
     public PostDto update(@RequestBody PostUpdateForm form, @PathVariable("id") Long id) {
         return postService.update(form, id);
+    }
+
+    @DeleteMapping("/api/v1/posts/{id}")
+    public void deleteById(@PathVariable("id") Long id) {
+        postService.deleteById(id);
     }
 }
