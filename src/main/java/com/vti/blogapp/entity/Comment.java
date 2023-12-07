@@ -5,34 +5,36 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "post")
-public class Post {
+@Table(name = "comment")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title", length = 50, unique = true, nullable = false)
-    private String title;
+    @Column(name = "name", length = 50, nullable = false)
+    private String name;
 
-    @Column(name = "description", length = 100, nullable = false)
-    private String description;
+    @Column(name = "email", length = 75, nullable = false)
+    private String email;
 
-    @Column(name = "content", length = 150, nullable = false)
-    private String content;
+    @Column(name = "body", length = 100, nullable = false)
+    private String body;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
@@ -42,6 +44,12 @@ public class Post {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments;
+    @ManyToOne
+    @JoinColumn(
+            name = "post_id",
+            referencedColumnName = "id",
+            nullable = false
+    )
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Post post;
 }
