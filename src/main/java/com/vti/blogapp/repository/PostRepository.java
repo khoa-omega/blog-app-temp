@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface PostRepository extends JpaRepository<Post, Long>,
         JpaSpecificationExecutor<Post> {
+    boolean existsByTitle(String title);
 }

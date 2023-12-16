@@ -32,7 +32,10 @@ public class CommentController {
     }
 
     @GetMapping("/api/v1/posts/{postId}/comments")
-    public Page<CommentDto> findByPostId(@PathVariable("postId") @PostIdExists Long postId, Pageable pageable) {
+    public Page<CommentDto> findByPostId(
+            @PathVariable("postId") @PostIdExists Long postId,
+            Pageable pageable
+    ) {
         return commentService.findByPostId(postId, pageable);
     }
 
